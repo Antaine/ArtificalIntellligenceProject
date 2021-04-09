@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 
+import ie.gmit.sw.ai.search.Node;
 import javafx.concurrent.Task;
 
 /*
@@ -21,7 +22,10 @@ import javafx.concurrent.Task;
 public class GameModel {
 	private static final int MAX_CHARACTERS = 10;
 	private ThreadLocalRandom rand = ThreadLocalRandom.current();
-	private char[][] model;
+	private static char[][] model;
+	private Node s;
+	private int[][] maze;
+	//private static GameModel maze = new GameModel(0);
 	
 	private final ExecutorService exec = Executors.newFixedThreadPool(MAX_CHARACTERS, e -> {
         Thread t = new Thread(e);
@@ -31,6 +35,7 @@ public class GameModel {
 	
 	public GameModel(int dimension){
 		model = new char[dimension][dimension];
+		s = new Node("S");
 		init();
 		carve();
 		addGameCharacters();
@@ -47,7 +52,11 @@ public class GameModel {
 		for (int row = 0; row < model.length; row++){
 			for (int col = 0; col < model[row].length; col++){
 				model[row][col] = '\u0030'; //\u0030 = 0x30 = 0 (base 10) = A hedge
+				//maze[row][col] = 1;
+				//System.out.print(maze[row][col]);
+				//Node node1 = new Node("1");
 			}
+			//System.out.println();
 		}
 	}
 	
@@ -55,21 +64,38 @@ public class GameModel {
 	 * Carve paths through the hedge to create passages.
 	 */
 	public void carve(){
+		int count =0;
 		for (int row = 0; row < model.length; row++){
+			//s = new Node("S");
+			//Node t = new Node("t");
 			for (int col = 0; col < model[row].length - 1; col++){
 				if (row == 0) {
 					model[row][col + 1] = '\u0020';
+				//	maze[row][col] = 0;
+					count++;
+					//System.out.println(count);
 				}else if (col == model.length - 1) {
 					model[row - 1][col] = '\u0020';
+				//	maze[row][col] = 0;
+					//System.out.println(count);
 				}else if (rand.nextBoolean()) {
 					model[row][col + 1] = '\u0020';
+					//maze[row][col] = 0;
+					//count++;
+					//System.out.println(count);
 				}else {
 					model[row - 1][col] = '\u0020';
+				//	maze[row][col] = 0;
+					//count++;
+				//	System.out.println(count);
 				}
+				
+				System.out.println(count);
 			}
 		}
 	}
 	
+	//Ad
 	private void addGameCharacters() {
 		Collection<Task<Void>> tasks = new ArrayList<>();
 		addGameCharacter(tasks, '\u0032', '0', MAX_CHARACTERS / 5); //2 is a Red Enemy, 0 is a hedge
@@ -110,6 +136,7 @@ public class GameModel {
 	}
 	
 	public char[][] getModel(){
+		
 		return this.model;
 	}
 	
@@ -124,4 +151,14 @@ public class GameModel {
 	public int size(){
 		return this.model.length;
 	}
+	
+	public Node getStartNode(){
+		return s;
+	}
+
+
+	
+	//public static GameModel getInstance(){
+	///	return maze;
+	//}
 }

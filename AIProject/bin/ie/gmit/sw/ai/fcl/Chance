@@ -10,19 +10,19 @@ FUNCTION_BLOCK getCatchChance
 	END_VAR
 	
 	FUZZIFY playerDistance
-		TERM close := (5,1)(15,0.5)(25,0);
-		TERM medium := trian 25 50 75;
+		TERM close := (1,1)(5,1)(10,0.8)(15,0.2)(20,0);
+		TERM medium := (5,0)(20,1)(35,0);
 		TERM far := (5, 0)(15,0.2)(30,1);
 	END_FUZZIFY
 	
 	FUZZIFY numOfEnemies
-		TERM none := (0,1)(1,0);
-		TERM few := (0, 0)(2,1)(6,0);
-		TERM high := (6, 1)(4,0.8)(0, 0);
+		TERM none := (0,1)(2,0);
+		TERM few := (0, 0)(2,1)(4,0.6)(6,0);
+		TERM high := (0, 0)(3,0.5)(4,0.8)(6, 1);
 	END_FUZZIFY
 	
 	DEFUZZIFY catchChance
-		TERM low := (0, 1) (25, 0);
+		TERM low := (0, 1) (25, 0.4)(40,0);
 		TERM normal := trian 25.0 55.0 65.0;
 		TERM high := (55, 0) (100, 1);
 		METHOD : COG;

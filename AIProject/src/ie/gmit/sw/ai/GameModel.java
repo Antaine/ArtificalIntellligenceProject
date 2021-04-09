@@ -24,7 +24,6 @@ public class GameModel {
 	private ThreadLocalRandom rand = ThreadLocalRandom.current();
 	private static char[][] model;
 	private Node s;
-	private int[][] maze;
 	//private static GameModel maze = new GameModel(0);
 	
 	private final ExecutorService exec = Executors.newFixedThreadPool(MAX_CHARACTERS, e -> {
@@ -71,31 +70,24 @@ public class GameModel {
 			for (int col = 0; col < model[row].length - 1; col++){
 				if (row == 0) {
 					model[row][col + 1] = '\u0020';
-				//	maze[row][col] = 0;
-					count++;
 					//System.out.println(count);
 				}else if (col == model.length - 1) {
 					model[row - 1][col] = '\u0020';
-				//	maze[row][col] = 0;
 					//System.out.println(count);
 				}else if (rand.nextBoolean()) {
 					model[row][col + 1] = '\u0020';
-					//maze[row][col] = 0;
 					//count++;
 					//System.out.println(count);
 				}else {
 					model[row - 1][col] = '\u0020';
-				//	maze[row][col] = 0;
-					//count++;
 				//	System.out.println(count);
 				}
-				
 				System.out.println(count);
 			}
 		}
 	}
 	
-	//Ad
+	//Add
 	private void addGameCharacters() {
 		Collection<Task<Void>> tasks = new ArrayList<>();
 		addGameCharacter(tasks, '\u0032', '0', MAX_CHARACTERS / 5); //2 is a Red Enemy, 0 is a hedge

@@ -7,7 +7,7 @@ import ie.gmit.sw.ai.GameModel;
 public class BFS {
 	private static LinkedList<Node> queue = new LinkedList<Node>();
 	
-	public BFS(GameModel model) {
+	public BFS(GameModel model, char[][] maze) {
 		Node start = model.getStartNode();
 		start.colour(Colour.Black);
 		queue.addLast(start);
@@ -17,8 +17,9 @@ public class BFS {
 	
 	public static void search(Node node){
 		while(!queue.isEmpty()){
+			System.out.println("Que: " + queue);
 			if (node.isGoalNode()){
-				System.out.println("Reached goal node " + node.getNodeName());
+				//System.out.println("Reached goal node " + node.getNodeName());
 				System.exit(0);
 			}else{
 				System.out.println("Que Loop "+queue);
@@ -33,10 +34,8 @@ public class BFS {
 				}
 			}
 			node = queue.getFirst();
-			System.out.println("Que: " + queue);
+			
 			node.colour(Colour.Black);
 		}
-		//
-		//System.out.println("NextNode: " + node);
 	}
 }

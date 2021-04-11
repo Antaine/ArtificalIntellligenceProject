@@ -51,11 +51,7 @@ public class GameModel {
 		for (int row = 0; row < model.length; row++){
 			for (int col = 0; col < model[row].length; col++){
 				model[row][col] = '\u0030'; //\u0030 = 0x30 = 0 (base 10) = A hedge
-				//maze[row][col] = 1;
-				//System.out.print(maze[row][col]);
-				//Node node1 = new Node("1");
 			}
-			//System.out.println();
 		}
 	}
 	
@@ -70,19 +66,13 @@ public class GameModel {
 			for (int col = 0; col < model[row].length - 1; col++){
 				if (row == 0) {
 					model[row][col + 1] = '\u0020';
-					//System.out.println(count);
 				}else if (col == model.length - 1) {
 					model[row - 1][col] = '\u0020';
-					//System.out.println(count);
 				}else if (rand.nextBoolean()) {
 					model[row][col + 1] = '\u0020';
-					//count++;
-					//System.out.println(count);
 				}else {
 					model[row - 1][col] = '\u0020';
-				//	System.out.println(count);
 				}
-				//System.out.println(count);
 			}
 		}
 	}

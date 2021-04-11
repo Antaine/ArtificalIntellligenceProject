@@ -53,6 +53,8 @@ public class CharacterTask extends Task<Void> {
 	private int nodeCount = 0;
 	private String nodeName = "0";
 	private Map map;
+	int temp_row = 0, temp_col =0;
+	int target_row = 0, target_col =0;
 
 	/*
 	 * Configure each character with its own action. Use this functional interface
@@ -79,32 +81,51 @@ public class CharacterTask extends Task<Void> {
 		 * unnecessary...).
 		 */
 
-		
-
 		while (alive) {
 			Thread.sleep(SLEEP_TIME);
 			this.map = new Map(model);
 			synchronized (model) {
 				// Randomly pick a direction up, down, left or right
 
-				int temp_row = row, temp_col = col;
-				if (rand.nextBoolean()) {
-					temp_row += rand.nextBoolean() ? 1 : -1;
-				} else {
-					temp_col += rand.nextBoolean() ? 1 : -1;
+				this.target_row = this.map.getRow();
+				this.target_col = this.map.getCol();
+				
+				if(this.row == target_row) {
+					this.temp_row = this.target_row;
 				}
+				
+				else if(this.target_row>this.row) {
+					this.temp_row +=1;
+				}
+				
+				else if(this.target_row<this.row) {
+					this.temp_row-=1;
+				}
+				
+				if(this.col == target_col) {
+					this.temp_col = target_col;
+				}
+				
+				else if(this.target_col>col) {
+					this.temp_col +=1;
+				}
+				
+				else if(this.target_col<this.col){
+					this.temp_col-=1;
+				}
+			
 
-				if (model.isValidMove(row, col, temp_row, temp_col, enemyID)) {
+				if (this.model.isValidMove(this.row, this.col, this.temp_row, this.temp_col, this.enemyID)) {
 					/*
 					 * This fires if the character can move to a cell, i.e. if it is not already
 					 * occupied. You can add extra logic here to invoke behaviour when the computer
 					 * controlled character is in the proximity of the player or another
 					 * character...
 					 */
-					model.set(temp_row, temp_col, enemyID);
-					model.set(row, col, '\u0020');
-					row = temp_row;
-					col = temp_col;
+					this.model.set(this.temp_row, this.temp_col, enemyID);
+					this.model.set(row, col, '\u0020');
+					this.row = this.temp_row;
+					this.col = this.temp_col;
 				} else {
 					/*
 					 * This fires if a move is not valid, i.e. if someone or some thing is in the

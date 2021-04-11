@@ -9,13 +9,13 @@ public class FuzzyTesting {
 
 	private static final String FCL_FILE = "E:\\Workspaces\\AI Labs\\AIProject\\AIProject\\src\\ie\\gmit\\sw\\ai\\fcl\\Chance";
 	
-	public double getChance(int playerDistance, int numOfEnemies) {
+	public  double getChance(int playerDistance, int numOfEnemies) {
 		//Get FCL FILE
 		FIS fis = FIS.load(FCL_FILE, true);
 		//Get FunctionBLock
 		FunctionBlock fb = fis.getFunctionBlock("getCatchChance");
 		//Display Chart
-		JFuzzyChart.get().chart(fb);
+		//JFuzzyChart.get().chart(fb);
 		////Set Variables
 		fis.setVariable("playerDistance", playerDistance);
 		fis.setVariable("numOfEnemies", numOfEnemies);
@@ -24,7 +24,7 @@ public class FuzzyTesting {
 		//Store Result
 		Variable chase = fb.getVariable("catchChance");
 		//Display Data
-		JFuzzyChart.get().chart(chase, chase.getDefuzzifier(),true);
+		//JFuzzyChart.get().chart(chase, chase.getDefuzzifier(),true);
 		//Return Salary
 		return (float) chase.getValue();
 	}

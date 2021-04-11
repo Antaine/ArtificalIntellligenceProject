@@ -5,22 +5,22 @@ import ie.gmit.sw.ai.Colour;
 import ie.gmit.sw.ai.GameModel;
 
 public class BFS {
-	private LinkedList<Node> queue = new LinkedList<Node>();
+	private static LinkedList<Node> queue = new LinkedList<Node>();
 	
-	public BFS(char[][] cs) {
-		//Node start = cs.getStartNode();
-		//start.colour(Colour.Black);
-	//	queue.addLast(start);
-		//search(start);
+	public BFS(GameModel model) {
+		Node start = model.getStartNode();
+		start.colour(Colour.Black);
+		queue.addLast(start);
+		search(start);
 	}
 	
-	public void search(Node node){
+	public static void search(Node node){
 		while(!queue.isEmpty()){
 			if (node.isGoalNode()){
 				System.out.println("Reached goal node " + node.getNodeName());
 				System.exit(0);
 			}else{
-				System.out.println(queue);
+				System.out.println("Que Loop "+queue);
 				Node[] children = node.children();
 				queue.removeFirst();
 				for (int i = 0; i < children.length; i++) {
@@ -34,12 +34,7 @@ public class BFS {
 			node = queue.getFirst();
 			node.colour(Colour.Black);
 		}
-	}
-
-	public static void main(String[] args) {
-		//model = GameModel.getInstance();
-		//new BFS(GameModel.getModel());
-	//	System.out.println(model[0][0]);
-		//BFS search = new BFS(model);
+		System.out.println("Que: " + queue);
+		System.out.println("NextNode: " + node);
 	}
 }

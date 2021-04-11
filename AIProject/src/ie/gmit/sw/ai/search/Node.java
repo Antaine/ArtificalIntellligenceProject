@@ -10,6 +10,7 @@ public class Node {
 	private boolean goalNode;
 	private Colour colour = Colour.White;
 	
+	
 	public Node(String name){
 		this.nodeName = name;
 	}

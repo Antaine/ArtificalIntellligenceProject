@@ -3,6 +3,7 @@ package ie.gmit.sw.ai;
 import javafx.application.Application;
 
 public class Runner {
+	
 	public static void main(String[] args) {
 		/*
 		 * PLEASE READ CAREFULLY
@@ -20,7 +21,7 @@ public class Runner {
 		 */
 		
 		  //Add long-running initialisation instructions here.
-		
+
 		
 		
 		/*
@@ -29,6 +30,13 @@ public class Runner {
 		 * keys to move the player character and the 'Z' key to 
 		 * toggle the zoom in / out.
 		 */
+		FuzzyTesting f = new FuzzyTesting();
+		double chance = f.getChance(1, 6);
+		System.out.println(chance);
+		if(chance>70) {
+			//System.out.println("Begin Chases");
+		}
 		Application.launch(GameWindow.class, args);
+	
 	}
 }

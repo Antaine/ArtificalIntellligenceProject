@@ -1,0 +1,53 @@
+FUNCTION_BLOCK getMove
+
+	VAR_INPUT
+		hp : REAL;
+		stamina : REAL;
+		confidence : REAL;
+	END_VAR
+
+	VAR_OUTPUT
+		catchChance : REAL;
+	END_VAR
+	
+	FUZZIFY hp
+		TERM low := (1,1)(15,1)(20,0.8)(40,0.4)(60,0);
+		TERM medium := (15,0)(25,0.2)(50,1) (60,0.9)(100,0);
+		TERM high := (40, 0)(60,0.2)(80,1)(100,1);
+	END_FUZZIFY
+	
+	FUZZIFY stamina
+		TERM low := (1,1)(15,1)(20,0.8)(40,0.4)(60,0);
+		TERM medium := (15,0)(25,0.2)(50,1) (60,0.9);
+		TERM high := (40, 0)(60,0.2)(80,1)(100,1);
+	END_FUZZIFY
+	
+	FUZZIFY confidence
+		TERM low := (0,1)(15,1)(25,0.6)(50,0.1)(100,0);
+		TERM medium := (15,0)(25,0.2)(50,1) (60,0.9) (100,0);
+		TERM high := (35, 0)(60,0.4)(80,0.8)(100,1);
+	END_FUZZIFY
+	
+	DEFUZZIFY catchChance
+		TERM low := (0, 1) (25, 0.4)(40,0);
+		TERM normal := trian 25.0 55.0 65.0;
+		TERM high := (55, 0) (100, 1);
+		METHOD : COG;
+		DEFAULT := 0;
+	END_DEFUZZIFY
+	
+	RULEBLOCK No1
+		AND : MIN;
+		ACT : MIN;
+		ACCU : MAX;
+		
+		RULE 1 : IF hp IS high AND stamina is high THEN catchChance IS high;
+		RULE 2 : IF hp IS medium AND stamina IS high THEN catchChance IS high;
+		RULE 3 : IF hp IS medium AND stamina IS low THEN catchChance IS low;
+		RULE 4 : IF hp IS low THEN catchChance IS low;
+		RULE 5 : IF hp IS low AND stamina IS high THEN catchChance IS low;
+		RULE 6 : IF hp IS medium AND stamina IS medium THEN catchChance IS normal;
+		RULE 7 : IF hp IS high AND stamina IS low THEN catchChance IS low;
+	END_RULEBLOCK
+
+END_FUNCTION_BLOCK

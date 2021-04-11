@@ -14,6 +14,7 @@ public class BFS {
 		search(start);
 	}
 	
+	
 	public static void search(Node node){
 		while(!queue.isEmpty()){
 			if (node.isGoalNode()){
@@ -32,9 +33,10 @@ public class BFS {
 				}
 			}
 			node = queue.getFirst();
+			System.out.println("Que: " + queue);
 			node.colour(Colour.Black);
 		}
-		System.out.println("Que: " + queue);
-		System.out.println("NextNode: " + node);
+		//
+		//System.out.println("NextNode: " + node);
 	}
 }

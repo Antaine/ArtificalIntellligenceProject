@@ -3,6 +3,7 @@ package ie.gmit.sw.ai;
 import java.util.concurrent.ThreadLocalRandom;
 
 import ie.gmit.sw.ai.search.BFS;
+import ie.gmit.sw.ai.search.Map;
 import ie.gmit.sw.ai.search.Node;
 import javafx.concurrent.Task;
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class CharacterTask extends Task<Void> {
 	private LinkedList<Node> filteredNodes = new LinkedList<Node>();
 	private int nodeCount = 0;
 	private String nodeName = "0";
+	private Map map;
 
 	/*
 	 * Configure each character with its own action. Use this functional interface
@@ -77,66 +79,13 @@ public class CharacterTask extends Task<Void> {
 		 * unnecessary...).
 		 */
 
+		
+
 		while (alive) {
 			Thread.sleep(SLEEP_TIME);
-
+			this.map = new Map(model);
 			synchronized (model) {
 				// Randomly pick a direction up, down, left or right
-
-				if (test) {
-					for (int i = 0; i < this.model.size(); i++) {
-						// System.out.println(nodes.toString());
-						for (int j = 0; j < this.model.size(); j++) {
-							// System.out.print( this.model.get(i,j));
-							if (model.get(i, j) == '0') {
-								// System.out.println("Hedge"+this.model.get(i, j));
-							}
-
-							else {
-								//System.out.println("Not Hedge"+this.model.get(i, j));
-								Node tempNode = new Node(String.valueOf(nodeCount));
-								//System.out.println(this.model.get(i,j));
-								if(nodeCount == 154) {
-									Node goal = new Node("t");
-									goal.setGoalNode(true);
-									this.nodes.add(goal);
-									System.out.println("Goal: "+tempNode);
-								}
-								
-								// System.out.println(nodes.toString());
-								this.nodes.add(tempNode);
-								if (model.isValidMove(i, j, i, j++, this.model.get(i, j))) {
-									Node nextNode = new Node(String.valueOf(nodeCount++));
-									tempNode.addChildNode(nextNode);
-								}
-								if (model.isValidMove(i, j, i++, j, this.model.get(i, j))) {
-									Node nextNode = new Node(String.valueOf(nodeCount++));
-									tempNode.addChildNode(nextNode);
-								}
-								
-								filteredNodes.removeAll(Collections.singleton(null));
-								//s = filteredNodes.get(nodeCount);
-								nodeCount++;
-								
-								BFS.search(tempNode);
-								
-								//System.out.println("TEst " + nodes);
-							}
-							
-							
-
-						}
-						test = false;
-						
-						// System.out.println("Test");
-					}
-
-					/// System.out.println(nodes.get(99));
-				}
-
-				System.out.println(nodes.toString());
-				System.out.println(filteredNodes.toString());
-				// System.out.println(nodes[i]);
 
 				int temp_row = row, temp_col = col;
 				if (rand.nextBoolean()) {

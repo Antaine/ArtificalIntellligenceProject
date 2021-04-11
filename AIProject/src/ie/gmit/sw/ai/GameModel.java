@@ -106,7 +106,6 @@ public class GameModel {
 			
 			if (model[row][col] == replace){
 				model[row][col] = enemyID;
-
 				/*
 				 * IMPORTANT! Change the following to parameterise your CharacterTask with an instance of
 				 * Command. The constructor call below is only parameterised with a lambda expression. 
